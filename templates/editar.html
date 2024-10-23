@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Editar Inscripción</title>
+    <style>
+        
+        .contenedor {
+            display: grid;
+            grid-template-columns: auto auto;
+            justify-content: space-between;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .seminarios {
+            margin-left: 20px;
+        }
+        
+    </style>
+</head>
+<body>
+    <div class="container">
+        
+        <h1>Editar Inscripción</h1>
+        
+        <form action="{{ url_for('editar', id=inscrito.id) }}" method="POST">
+            <div class="form-group">
+                <label>Fecha:</label>
+                <input type="date" name="fecha" value="{{ inscrito.fecha }}" required>
+            </div>
+            
+            <div class="form-group">
+                <label>Nombre:</label>
+                <input type="text" name="nombre" value="{{ inscrito.nombre }}" required>
+            </div>
+            
+            <div class="form-group">
+                <label>Apellidos:</label>
+                <input type="text" name="apellidos" value="{{ inscrito.apellidos }}" required>
+            </div>
+            
+            <div class="form-group">
+                <label>Turno:</label>
+                <input type="radio" name="turno" value="Mañana" {% if inscrito.turno == 'Mañana' %}checked{% endif %} required> Mañana
+                <input type="radio" name="turno" value="Tarde" {% if inscrito.turno == 'Tarde' %}checked{% endif %}> Tarde
+                <input type="radio" name="turno" value="Noche" {% if inscrito.turno == 'Noche' %}checked{% endif %}> Noche
+            </div>
+        
+        
+            <div class="form-group">
+                <label>Seminarios disponibles:</label>
+                <div class="seminarios">
+                    {% set seminarios_list = inscrito.seminarios.split(', ') %}
+                    <input type="checkbox" name="seminarios" value="Inteligencia Artificial" {% if 'Inteligencia Artificial' in seminarios_list %}checked{% endif %}> Inteligencia Artificial<br>
+                    <input type="checkbox" name="seminarios" value="Machine Learning" {% if 'Machine Learning' in seminarios_list %}checked{% endif %}> Machine Learning<br>
+                    <input type="checkbox" name="seminarios" value="Simulación con Arena" {% if 'Simulación con Arena' in seminarios_list %}checked{% endif %}> Simulación con Arena<br>
+                    <input type="checkbox" name="seminarios" value="Robótica Educativa" {% if 'Robótica Educativa' in seminarios_list %}checked{% endif %}> Robótica Educativa
+                </div>
+            </div>
+        
+            
+            <button type="submit">Guardar cambios</button>
+        </form>
+        
+        <a href="{{ url_for('ver_inscritos') }}">Volver al listado</a>
+    </div>
+</body>
+</html>

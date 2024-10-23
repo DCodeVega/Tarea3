@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Listado de inscritos</title>
+    
+    <style>
+        .container {
+            width: 90%;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .actions {
+            display: flex;
+            gap: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Listado de inscritos</h1>
+        
+        <a href="{{ url_for('index') }}" class="button">Nuevo</a>
+        
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Fecha</th>
+                    <th>Nombre</th>
+                    <th>Apellidos</th>
+                    <th>Turno</th>
+                    <th>Seminarios</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for inscrito in inscritos %}
+                <tr>
+                    <td>{{ inscrito.id }}</td>
+                    <td>{{ inscrito.fecha }}</td>
+                    <td>{{ inscrito.nombre }}</td>
+                    <td>{{ inscrito.apellidos }}</td>
+                    <td>{{ inscrito.turno }}</td>
+                    <td>{{ inscrito.seminarios }}</td>
+                    <td class="actions">
+                        <a href="{{ url_for('editar', id=inscrito.id) }}">Editar</a>
+                        <a href="{{ url_for('eliminar', id=inscrito.id) }}" onclick="return confirm('¿Está seguro de eliminar este registro?')">Eliminar</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
